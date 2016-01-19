@@ -16,7 +16,7 @@ prodArray.push(new Product('Dragon meat', 'dragon.jpg'));
 prodArray.push(new Product('Pen utensils', 'pen.jpg'));
 prodArray.push(new Product('Pizza scissors', 'scissors.jpg'));
 prodArray.push(new Product('Shark sleeping bag', 'shark.jpg'));
-prodArray.push(new Product('Infant sweeper', 'sweep.jpg'));
+prodArray.push(new Product('Infant sweeper', 'sweep.png'));
 prodArray.push(new Product('Unicorn meat', 'unicorn.jpg'));
 prodArray.push(new Product('USB tentacle', 'usb.gif'));
 prodArray.push(new Product('Self-watering can', 'water-can.jpg'));
@@ -32,7 +32,14 @@ imageElementArray.push(document.getElementById('image1'));
 imageElementArray.push(document.getElementById('image2'));
 imageElementArray.push(document.getElementById('image3'));
 
+var titleElementArray = [];
+titleElementArray.push(document.getElementById('title1'));
+titleElementArray.push(document.getElementById('title2'));
+titleElementArray.push(document.getElementById('title3'));
+
 function showProduct(prodNum, slotNum) {
   var slotImageElement = imageElementArray[slotNum];
+  var slotTitleElement = titleElementArray[slotNum];
   slotImageElement.setAttribute('src', 'img\/' + prodArray[prodNum].imageFile);
+  slotTitleElement.textContent = prodArray[prodNum].productName;
 }
