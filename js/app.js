@@ -29,19 +29,65 @@ prodArray.push(new Product('Sideways wine glass', 'wine-glass.jpg'));
 // boxElementArray.push(document.getElementById('box2'));
 // boxElementArray.push(document.getElementById('box3'));
 
-var imageElementArray = [];
-imageElementArray.push(document.getElementById('image1'));
-imageElementArray.push(document.getElementById('image2'));
-imageElementArray.push(document.getElementById('image3'));
+// var imageElementArray = [];
+// imageElementArray.push(document.getElementById('image1'));
+// imageElementArray.push(document.getElementById('image2'));
+// imageElementArray.push(document.getElementById('image3'));
+//
+// var titleElementArray = [];
+// titleElementArray.push(document.getElementById('title1'));
+// titleElementArray.push(document.getElementById('title2'));
+// titleElementArray.push(document.getElementById('title3'));
+var slotInit;
 
-var titleElementArray = [];
-titleElementArray.push(document.getElementById('title1'));
-titleElementArray.push(document.getElementById('title2'));
-titleElementArray.push(document.getElementById('title3'));
+var totalClicks = 0;
+
+function DisplaySlot(slotInitNum) {
+  var boxId = 'box' + (slotInitNum + 1);
+  var imageId = 'image' + (slotInitNum + 1);
+  var titleId = 'title' + (slotInitNum + 1);
+  this.displaySlotNum = slotInitNum;
+  this.boxElement = document.getElementById(boxId);
+  this.imageElement = document.getElementById(imageId);
+  this.titleElement = document.getElementById(titleId);
+  // this.handleClick = function() {
+  //   totalClicks += 1;
+  //   for(var i = 0; i < 3; i += 1) {
+  //     prodArray[prodShown[i]].timesShown += 1;
+  //   }
+  //   console.log(this.displaySlotNum);
+  //   // prodArray[prodShown[this.displaySlotNum]].timesChosen += 1;
+  //   // prodArray[this.displaySlotNum].timesChosen += 1;
+  //   showNewProductGroup();
+  // }
+  // this.createBoxEventListener = function() {
+  //   this.boxElement.addEventListener('click', function(), slotInit);
+  // }
+  // this.createBoxEventListener();
+}
+
+// DisplaySlot.prototype.handleClick = function(event) {
+//   console.log(event);
+//   totalClicks += 1;
+//   for(var i = 0; i < 3; i += 1) {
+//     prodArray[prodShown[i]].timesShown += 1;
+//   }
+//   prodArray[this.displaySlotNum] += 1;
+//   showNewProductGroup();
+// }
+
+
+var displaySlotArray = [];
+
+for(var i = 0; i < 3; i += 1) {
+  // slotInit = i;
+  displaySlotArray[i] = new DisplaySlot(i);
+}
+
 
 function showProduct(prodNum, slotNum) {
-  var slotImageElement = imageElementArray[slotNum];
-  var slotTitleElement = titleElementArray[slotNum];
+  var slotImageElement = displaySlotArray[slotNum].imageElement;
+  var slotTitleElement = displaySlotArray[slotNum].titleElement;
   slotImageElement.setAttribute('src', 'img\/' + prodArray[prodNum].imageFile);
   slotTitleElement.textContent = prodArray[prodNum].productName;
 }
@@ -74,8 +120,38 @@ function genProdShownArray() {
 function showNewProductGroup() {
   prodShown = genProdShownArray();
   for(var i = 0; i < 3; i += 1) {
+    // console.log(prodShown[i]);
     showProduct(prodShown[i], i);
   }
 }
+
+displaySlotArray[0].boxElement.addEventListener('click', handleClickSlotOne);
+displaySlotArray[1].boxElement.addEventListener('click', handleClickSlotTwo);
+displaySlotArray[2].boxElement.addEventListener('click', handleClickSlotThree);
+
+function handleClickAll(clickSlot) {
+    totalClicks += 1;
+    prodArray[prodShown[clickSlot]].timesChosen += 1;
+    for(var i = 0; i < 3; i += 1) {
+      prodArray[prodShown[i]].timesShown += 1;
+    }
+    showNewProductGroup();
+}
+
+function handleClickSlotOne(e) {
+  handleClickAll(0);
+}
+
+function handleClickSlotTwo(e) {
+  handleClickAll(1);
+}
+
+function handleClickSlotThree(e) {
+  handleClickAll(2);
+}
+
+
+
+
 
 showNewProductGroup();
