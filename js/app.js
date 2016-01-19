@@ -44,6 +44,12 @@ function showProduct(prodNum, slotNum) {
   slotTitleElement.textContent = prodArray[prodNum].productName;
 }
 
-showProduct(11, 0);
-showProduct(3, 1);
-showProduct(8, 2);
+var prodShown = [10, 2, 7];
+
+for(i = 0; i < 3; i += 1) {
+  showProduct(prodShown[i], i);
+}
+
+// showProduct(11, 0);
+// showProduct(3, 1);
+// showProduct(8, 2);
