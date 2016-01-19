@@ -71,8 +71,11 @@ function genProdShownArray() {
   return newArray;
 }
 
-prodShown = genProdShownArray();
-
-for(var i = 0; i < 3; i += 1) {
-  showProduct(prodShown[i], i);
+function showNewProductGroup() {
+  prodShown = genProdShownArray();
+  for(var i = 0; i < 3; i += 1) {
+    showProduct(prodShown[i], i);
+  }
 }
+
+showNewProductGroup();
