@@ -1,3 +1,5 @@
+'use strict';
+
 function Product(productName, imageFile) {
   this.productName = productName;
   this.imageFile = imageFile;
@@ -44,12 +46,33 @@ function showProduct(prodNum, slotNum) {
   slotTitleElement.textContent = prodArray[prodNum].productName;
 }
 
-var prodShown = [10, 2, 7];
-
-for(i = 0; i < 3; i += 1) {
-  showProduct(prodShown[i], i);
+function randomProductNumber() {
+  return Math.floor(Math.random() * prodArray.length);
 }
 
-// showProduct(11, 0);
-// showProduct(3, 1);
-// showProduct(8, 2);
+var prodShown = [];
+
+function genProdShownArray() {
+  var newArray = [];
+  var match;
+  for(var i = 0; i < 3; ) {
+    var newProdNum = randomProductNumber();
+    match = false;
+    for(var j = i - 1; j >= 0; j -= 1) {
+      if(newArray[j] === newProdNum) {
+        match = true;
+      }
+    }
+    if(!match) {
+      newArray[i] = newProdNum;
+      i += 1;
+    }
+  }
+  return newArray;
+}
+
+prodShown = genProdShownArray();
+
+for(var i = 0; i < 3; i += 1) {
+  showProduct(prodShown[i], i);
+}
