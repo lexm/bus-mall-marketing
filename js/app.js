@@ -21,3 +21,18 @@ prodArray.push(new Product('Unicorn meat', 'unicorn.jpg'));
 prodArray.push(new Product('USB tentacle', 'usb.gif'));
 prodArray.push(new Product('Self-watering can', 'water-can.jpg'));
 prodArray.push(new Product('Sideways wine glass', 'wine-glass.jpg'));
+
+// var boxElementArray = [];
+// boxElementArray.push(document.getElementById('box1'));
+// boxElementArray.push(document.getElementById('box2'));
+// boxElementArray.push(document.getElementById('box3'));
+
+var imageElementArray = [];
+imageElementArray.push(document.getElementById('image1'));
+imageElementArray.push(document.getElementById('image2'));
+imageElementArray.push(document.getElementById('image3'));
+
+function showProduct(prodNum, slotNum) {
+  var slotImageElement = imageElementArray[slotNum];
+  slotImageElement.setAttribute('src', 'img\/' + prodArray[prodNum].imageFile);
+}

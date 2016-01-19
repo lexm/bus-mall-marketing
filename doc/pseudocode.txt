@@ -8,35 +8,63 @@ write Product constructor
     timesShown : integer
 create array of Product
 
+generate prodShown array
+  for(i = 0; i < 3; i++)
+    pick product number
+    check if previously chosen
+    if not, write to prodShown[i] (or push)
+    else, pick again
+
+
 
 (pick product)
 generate random number corresponding to product index
-
-generate HTML element using random index
 (end)
 
-pick product
-write image to slot 1
+show product image(prodNumber, imageNumber)
+  get prodArray[prodnumber].imageFile
+  generate HTML code for element
+  write to appropriate spot in DOM
+   (array of elements indexed by imageNumber)
 
-pick new product
-check to see if identical to first product
-if not, repeat. if so, go on
-write image to slot 2
 
-pick new product
-check if identical to either of first two products
-if not, repeat. if so, go on
-write image to slot 3
+
+
 
 event listeners for each image box
 if clicked, add 1 to choice count for chosen image,
-  add 1 to shown count for all 3 images,
-  and add 1 to count of choices made.
+add 1 to shown count for all 3 images,
+and add 1 to count of choices made.
 
 
 when choicesMade >= 15,
-  reveal hidden image for "Show Results"
+reveal hidden image for "Show Results"
 
-  event listener for showResults
-  (show only after 15 choices made)
-  generate table/chart showing results of survey
+event listener for showResults
+(show only after 15 choices made)
+generate table/chart showing results of survey
+
+
+
+
+
+
+
+
+
+  /* begin abandoned pcode
+
+  pick product
+  write image to slot 1
+
+  pick new product
+  check to see if identical to first product
+  if not, repeat. if so, go on
+  write image to slot 2
+
+  pick new product
+  check if identical to either of first two products
+  if not, repeat. if so, go on
+  write image to slot 3
+
+  end abandoned pcode */
