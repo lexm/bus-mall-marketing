@@ -15,6 +15,9 @@ to the results of the survey until they have answered at least 15 questions,
 so their answers won't be biased by the results.
 * As a marketing research team member, I want to keep track of how many users
 chose to look at their own results, and how many did not.
+* As a marketing research team member, I want the users to have the option to
+exit without showing their results, so as not to bias the previously mentioned
+number.
 
 * As a developer, I want to use Object-Oriented Programming to simplify my
 code.
@@ -38,4 +41,6 @@ and roughly the same size, to make things easier on my eyes.
 * As a focus group member, I want to have the choice to see the results of my
 survey as soon as I'm allowed to do so.
 * As a focus group member, I want a short description of each item to be shown
-under each photo, in case I'm not sure what the item is
+under each photo, in case I'm not sure what the item is.
+* As a focus group member, I want to be able to exit the survey without
+bothering to look at my results.

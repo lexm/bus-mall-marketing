@@ -1,0 +1,21 @@
+#product-set {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.product-image {
+  width: 300px;
+  max-height: 300px;
+  margin:auto;
+  /*height: 300px;*/
+}
+
+.product-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid black;
+  margin: 10px;
+}
