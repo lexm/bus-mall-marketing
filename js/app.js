@@ -43,3 +43,7 @@ function showProduct(prodNum, slotNum) {
   slotImageElement.setAttribute('src', 'img\/' + prodArray[prodNum].imageFile);
   slotTitleElement.textContent = prodArray[prodNum].productName;
 }
+
+showProduct(11, 0);
+showProduct(3, 1);
+showProduct(8, 2);
