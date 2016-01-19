@@ -168,22 +168,35 @@ showButtonElement.addEventListener('click', handleButtonClick);
 
 function handleButtonClick(e) {
   showButtonElement.textContent = 'Update Results';
-  var displayList = document.createElement('ul');
+  var nameArray = [];
+  var chosenArray = [];
+  var shownArray = [];
+  var percentArray = [];
+  // var displayList = document.createElement('ul');
   for(var i = 0; i < prodArray.length; i += 1) {
-    var prodResults = document.createElement('li');
-    var pName = prodArray[i].productName;
+    // var prodResults = document.createElement('li');
+    // var pName = prodArray[i].productName;
+    var shortName = prodArray[i].imageFile.split('.')[0];
+    nameArray.push(shortName);
     var chosen = prodArray[i].timesChosen;
+    chosenArray.push(chosen);
     var shown = prodArray[i].timesShown;
-    var percentage = "(not shown)"
+    shownArray.push(shown);
+    var percentage = 0;
     if (shown) {
       percentage = Math.round((chosen / shown) * 100) + "%";
     }
-    console.log(chosen + " " + shown + " " + percentage);
-    prodResults.textContent = pName + " received " + chosen + " votes out \
-    of " + shown + " times shown. " + percentage;
-    displayList.appendChild(prodResults);
+    percentArray.push(percentage);
+    // console.log(chosen + " " + shown + " " + percentage);
+    // prodResults.textContent = pName + " received " + chosen + " votes out \
+    // of " + shown + " times shown. " + percentage;
+    // displayList.appendChild(prodResults);
   }
-  resultsElement.appendChild(displayList);
+  console.log(nameArray);
+  console.log(chosenArray);
+  console.log(shownArray);
+  console.log(percentArray);
+  // resultsElement.appendChild(displayList);
 }
 
 
