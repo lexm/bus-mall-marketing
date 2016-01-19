@@ -140,10 +140,11 @@ function handleClickAll(clickSlot) {
 }
 
 var buttonElement = document.getElementById('show-button');
+var showButtonNumber = 3;
 
 function checkButtonCount() {
   console.log('totalClicks is ' + totalClicks);
-  if(totalClicks === 15) {
+  if(totalClicks === showButtonNumber) {
     buttonElement.style.visibility = 'visible';
   }
 }
@@ -160,7 +161,30 @@ function handleClickSlotThree(e) {
   handleClickAll(2);
 }
 
+var showButtonElement = document.getElementById('show-button');
+var resultsElement = document.getElementById('results');
 
+showButtonElement.addEventListener('click', handleButtonClick);
+
+function handleButtonClick(e) {
+  showButtonElement.textContent = 'Update Results';
+  var displayList = document.createElement('ul');
+  for(var i = 0; i < prodArray.length; i += 1) {
+    var prodResults = document.createElement('li');
+    var pName = prodArray[i].productName;
+    var chosen = prodArray[i].timesChosen;
+    var shown = prodArray[i].timesShown;
+    var percentage = "(not shown)"
+    if (shown) {
+      percentage = Math.round((chosen / shown) * 100) + "%";
+    }
+    console.log(chosen + " " + shown + " " + percentage);
+    prodResults.textContent = pName + " received " + chosen + " votes out \
+    of " + shown + " times shown. " + percentage;
+    displayList.appendChild(prodResults);
+  }
+  resultsElement.appendChild(displayList);
+}
 
 
 
