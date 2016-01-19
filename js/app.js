@@ -136,6 +136,16 @@ function handleClickAll(clickSlot) {
       prodArray[prodShown[i]].timesShown += 1;
     }
     showNewProductGroup();
+    checkButtonCount();
+}
+
+var buttonElement = document.getElementById('show-button');
+
+function checkButtonCount() {
+  console.log('totalClicks is ' + totalClicks);
+  if(totalClicks === 15) {
+    buttonElement.style.visibility = 'visible';
+  }
 }
 
 function handleClickSlotOne(e) {
