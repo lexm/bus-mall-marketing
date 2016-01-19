@@ -9,10 +9,16 @@ write Product constructor
 create array of Product
 
 generate prodShown array
-  for(i = 0; i < 3; i++)
-    pick product number
-    check if previously chosen
-    if not, write to prodShown[i] (or push)
+  for(i = 0; i < 3; )
+    pick random product number
+    if i > 0
+      (check if previously chosen)
+        if i = 1, compare to prodShown[0]
+        if i = 2, compare to both prodShown[0 and 1]
+      match means repeat random pick
+    if not,
+      write to prodShown[i] (or push)
+      i += 1
     else, pick again
 
 
