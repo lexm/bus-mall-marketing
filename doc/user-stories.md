@@ -8,6 +8,8 @@ catalog are going to be the most popular, so I can feature them prominently.
 since those will be the ones which will be shown in our catalog.
 * As a marketing research team member, I want to show members of the focus
 group three products at a time, so their decisions will be simple.
+* As a marketing research team member, I want products to be shown less often
+the more they've been shown already.
 * As a marketing research team member, I want to see the results of the survey
 in a format that is easy to read and understand.
 * As a marketing research team member, I want the users not to have access
