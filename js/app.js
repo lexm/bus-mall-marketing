@@ -192,11 +192,31 @@ function handleButtonClick(e) {
     // of " + shown + " times shown. " + percentage;
     // displayList.appendChild(prodResults);
   }
+  var graphData = {
+    labels: nameArray,
+    datasets: [
+      {
+        fillColor: '#48A497',
+        strokeColor: '#48A4D1',
+        data: chosenArray
+      },
+      {
+        fillColor: 'rgba(73,188,170,0.4)',
+        strokeColor: 'rgba(72,174,209,0.4)',
+        data: shownArray
+      }
+    ]
+  }
+
+  var graphElement = document.getElementById('bar-graph').getContext('2d');
+  new Chart(graphElement).Bar(graphData);
+
+
+
   console.log(nameArray);
   console.log(chosenArray);
   console.log(shownArray);
   console.log(percentArray);
-  // resultsElement.appendChild(displayList);
 }
 
 
