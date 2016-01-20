@@ -23,3 +23,13 @@
 #show-button {
   visibility: hidden;
 }
+
+#results {
+  display: flex;
+  justify-content: center;
+}
+
+#button-div {
+  text-align:center;
+  margin: auto;
+}
