@@ -46,7 +46,7 @@ function DisplaySlot(slotInitNum) {
   var boxId = 'box' + (slotInitNum + 1);
   var imageId = 'image' + (slotInitNum + 1);
   var titleId = 'title' + (slotInitNum + 1);
-  this.displaySlotNum = slotInitNum;
+  // this.displaySlotNum = slotInitNum;
   this.boxElement = document.getElementById(boxId);
   this.imageElement = document.getElementById(imageId);
   this.titleElement = document.getElementById(titleId);
@@ -92,8 +92,19 @@ function showProduct(prodNum, slotNum) {
   slotTitleElement.textContent = prodArray[prodNum].productName;
 }
 
+// function randomProductNumber() {
+//   return Math.floor(Math.random() * prodArray.length);
+// }
+
 function randomProductNumber() {
-  return Math.floor(Math.random() * prodArray.length);
+  while (true) {
+    var newRandom = Math.floor(Math.random() * prodArray.length);
+    var newRandomShown = prodArray[newRandom].timesShown;
+    if(newRandomShown > 6) { newRandomShown = 6; }
+    if(Math.floor(Math.random() * Math.pow(2, newRandomShown)) === 0) {
+      return newRandom;
+    }
+  }
 }
 
 var prodShown = [];
@@ -116,17 +127,6 @@ function genProdShownArray() {
     if(checkIfNoRepeat(newArray)) {
       i += 1;
     }
-    // var newProdNum = randomProductNumber();
-    // match = false;
-    // for(var j = i - 1; j >= 0; j -= 1) {
-    //   if(newArray[j] === newProdNum) {
-    //     match = true;
-    //   }
-    // }
-    // if(!match) {
-    //   newArray[i] = newProdNum;
-    //   i += 1;
-    // }
   }
   return newArray;
 }
