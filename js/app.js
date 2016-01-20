@@ -172,10 +172,7 @@ function handleButtonClick(e) {
   var chosenArray = [];
   var shownArray = [];
   var percentArray = [];
-  // var displayList = document.createElement('ul');
   for(var i = 0; i < prodArray.length; i += 1) {
-    // var prodResults = document.createElement('li');
-    // var pName = prodArray[i].productName;
     var shortName = prodArray[i].imageFile.split('.')[0];
     nameArray.push(shortName);
     var chosen = prodArray[i].timesChosen;
@@ -187,20 +184,23 @@ function handleButtonClick(e) {
       percentage = Math.round((chosen / shown) * 100) + "%";
     }
     percentArray.push(percentage);
-    // console.log(chosen + " " + shown + " " + percentage);
-    // prodResults.textContent = pName + " received " + chosen + " votes out \
-    // of " + shown + " times shown. " + percentage;
-    // displayList.appendChild(prodResults);
   }
+  produceBarGraph(nameArray, chosenArray, shownArray);
+}
+
+function produceBarGraph(nameArray, chosenArray, shownArray) {
   var graphData = {
     labels: nameArray,
+    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
     datasets: [
       {
+        label: 'Times Item Chosen',
         fillColor: '#48A497',
         strokeColor: '#48A4D1',
         data: chosenArray
       },
       {
+        label: 'Times Item Shown',
         fillColor: 'rgba(73,188,170,0.4)',
         strokeColor: 'rgba(72,174,209,0.4)',
         data: shownArray
@@ -209,16 +209,9 @@ function handleButtonClick(e) {
   }
 
   var graphElement = document.getElementById('bar-graph').getContext('2d');
-  new Chart(graphElement).Bar(graphData);
-
-
-
-  console.log(nameArray);
-  console.log(chosenArray);
-  console.log(shownArray);
-  console.log(percentArray);
+  var legendElement = document.getElementById('legend');
+  var barChart = new Chart(graphElement).Bar(graphData);
+  legendElement.innerHTML = barChart.generateLegend();
 }
-
-
 
 showNewProductGroup();
