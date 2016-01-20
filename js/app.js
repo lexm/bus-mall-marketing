@@ -98,21 +98,35 @@ function randomProductNumber() {
 
 var prodShown = [];
 
+function checkIfNoRepeat(newProdArray) {
+  var arrLength = newProdArray.length - 1;
+  var newPNum = newProdArray[arrLength];
+  for(var i = 0; i < arrLength; i += 1) {
+    if(newProdArray[i] === newPNum)
+    return false;
+  }
+  return true;
+}
+
 function genProdShownArray() {
   var newArray = [];
-  var match;
+  // var match;
   for(var i = 0; i < 3; ) {
-    var newProdNum = randomProductNumber();
-    match = false;
-    for(var j = i - 1; j >= 0; j -= 1) {
-      if(newArray[j] === newProdNum) {
-        match = true;
-      }
-    }
-    if(!match) {
-      newArray[i] = newProdNum;
+    newArray[i] = randomProductNumber();
+    if(checkIfNoRepeat(newArray)) {
       i += 1;
     }
+    // var newProdNum = randomProductNumber();
+    // match = false;
+    // for(var j = i - 1; j >= 0; j -= 1) {
+    //   if(newArray[j] === newProdNum) {
+    //     match = true;
+    //   }
+    // }
+    // if(!match) {
+    //   newArray[i] = newProdNum;
+    //   i += 1;
+    // }
   }
   return newArray;
 }
