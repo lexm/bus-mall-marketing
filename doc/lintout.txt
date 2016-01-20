@@ -1,0 +1,22 @@
+
+/Users/lexmyers/Dev/201d5/week-3/bus-mall-marketing/js/app.js
+   79:5   error  Expected { after 'if' condition                         curly
+   80:5   error  Expected indentation of 6 space characters but found 4  indent
+  112:5   error  Expected indentation of 2 space characters but found 4  indent
+  113:5   error  Expected indentation of 2 space characters but found 4  indent
+  114:5   error  Expected indentation of 2 space characters but found 4  indent
+  117:5   error  Expected indentation of 2 space characters but found 4  indent
+  118:5   error  Expected indentation of 2 space characters but found 4  indent
+  159:57  error  Strings must use singlequote                            quotes
+  169:22  error  Strings must use singlequote                            quotes
+  184:4   error  Missing semicolon                                       semi
+  188:22  error  "Chart" is not defined                                  no-undef
+
+/Users/lexmyers/Dev/201d5/week-3/bus-mall-marketing/README.md
+  0:0  warning  File ignored because of your .eslintignore file. Use --no-ignore to override
+
+/Users/lexmyers/Dev/201d5/week-3/bus-mall-marketing/index.html
+  0:0  warning  File ignored because of your .eslintignore file. Use --no-ignore to override
+
+✖ 13 problems (11 errors, 2 warnings)
+
