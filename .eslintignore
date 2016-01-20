@@ -1,0 +1,9 @@
+.git/**
+css/**
+doc/**
+img/**
+js/Chart.min.js
+.eslintignore
+.eslintrc
+**.html
+README.md
