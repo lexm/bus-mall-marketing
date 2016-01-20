@@ -13,6 +13,8 @@ var prodShown = [];
 var totalClicks = 0;
 var buttonElement = document.getElementById('show-button');
 var resultsElement = document.getElementById('results');
+var graphElement = document.getElementById('bar-graph').getContext('2d');
+var legendElement = document.getElementById('legend');
 
 function Product(productName, imageFile) {
   this.productName = productName;
@@ -83,24 +85,17 @@ function checkIfNoRepeat(newProdArray) {   // Checks if last (newest) item in
   return true;
 }
 
-function genProdShownArray() {
+function showNewProductGroup() {
   var newArray = [];
   for(var i = 0; i < 3; ) {
     newArray[i] = randomProductNumber();
     if(checkIfNoRepeat(newArray)) {
+      showProduct([newArray[i]], i);
       i += 1;
     }
   }
-  return newArray;
+  prodShown = newArray;
 }
-
-function showNewProductGroup() {
-  prodShown = genProdShownArray();
-  for(var i = 0; i < 3; i += 1) {
-    showProduct(prodShown[i], i);
-  }
-}
-
 
 buttonElement.addEventListener('click', handleButtonClick);
 
@@ -136,8 +131,6 @@ function produceBarGraph(nameArray, chosenArray, shownArray) {
       }
     ]
   };
-  var graphElement = document.getElementById('bar-graph').getContext('2d');
-  var legendElement = document.getElementById('legend');
   var barChart = new Chart(graphElement).Bar(graphData);
   legendElement.innerHTML = barChart.generateLegend();
 }
