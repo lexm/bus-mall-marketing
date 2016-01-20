@@ -29,19 +29,65 @@ prodArray.push(new Product('Sideways wine glass', 'wine-glass.jpg'));
 // boxElementArray.push(document.getElementById('box2'));
 // boxElementArray.push(document.getElementById('box3'));
 
-var imageElementArray = [];
-imageElementArray.push(document.getElementById('image1'));
-imageElementArray.push(document.getElementById('image2'));
-imageElementArray.push(document.getElementById('image3'));
+// var imageElementArray = [];
+// imageElementArray.push(document.getElementById('image1'));
+// imageElementArray.push(document.getElementById('image2'));
+// imageElementArray.push(document.getElementById('image3'));
+//
+// var titleElementArray = [];
+// titleElementArray.push(document.getElementById('title1'));
+// titleElementArray.push(document.getElementById('title2'));
+// titleElementArray.push(document.getElementById('title3'));
+var slotInit;
 
-var titleElementArray = [];
-titleElementArray.push(document.getElementById('title1'));
-titleElementArray.push(document.getElementById('title2'));
-titleElementArray.push(document.getElementById('title3'));
+var totalClicks = 0;
+
+function DisplaySlot(slotInitNum) {
+  var boxId = 'box' + (slotInitNum + 1);
+  var imageId = 'image' + (slotInitNum + 1);
+  var titleId = 'title' + (slotInitNum + 1);
+  this.displaySlotNum = slotInitNum;
+  this.boxElement = document.getElementById(boxId);
+  this.imageElement = document.getElementById(imageId);
+  this.titleElement = document.getElementById(titleId);
+  // this.handleClick = function() {
+  //   totalClicks += 1;
+  //   for(var i = 0; i < 3; i += 1) {
+  //     prodArray[prodShown[i]].timesShown += 1;
+  //   }
+  //   console.log(this.displaySlotNum);
+  //   // prodArray[prodShown[this.displaySlotNum]].timesChosen += 1;
+  //   // prodArray[this.displaySlotNum].timesChosen += 1;
+  //   showNewProductGroup();
+  // }
+  // this.createBoxEventListener = function() {
+  //   this.boxElement.addEventListener('click', function(), slotInit);
+  // }
+  // this.createBoxEventListener();
+}
+
+// DisplaySlot.prototype.handleClick = function(event) {
+//   console.log(event);
+//   totalClicks += 1;
+//   for(var i = 0; i < 3; i += 1) {
+//     prodArray[prodShown[i]].timesShown += 1;
+//   }
+//   prodArray[this.displaySlotNum] += 1;
+//   showNewProductGroup();
+// }
+
+
+var displaySlotArray = [];
+
+for(var i = 0; i < 3; i += 1) {
+  // slotInit = i;
+  displaySlotArray[i] = new DisplaySlot(i);
+}
+
 
 function showProduct(prodNum, slotNum) {
-  var slotImageElement = imageElementArray[slotNum];
-  var slotTitleElement = titleElementArray[slotNum];
+  var slotImageElement = displaySlotArray[slotNum].imageElement;
+  var slotTitleElement = displaySlotArray[slotNum].titleElement;
   slotImageElement.setAttribute('src', 'img\/' + prodArray[prodNum].imageFile);
   slotTitleElement.textContent = prodArray[prodNum].productName;
 }
@@ -71,8 +117,101 @@ function genProdShownArray() {
   return newArray;
 }
 
-prodShown = genProdShownArray();
-
-for(var i = 0; i < 3; i += 1) {
-  showProduct(prodShown[i], i);
+function showNewProductGroup() {
+  prodShown = genProdShownArray();
+  for(var i = 0; i < 3; i += 1) {
+    // console.log(prodShown[i]);
+    showProduct(prodShown[i], i);
+  }
 }
+
+displaySlotArray[0].boxElement.addEventListener('click', handleClickSlotOne);
+displaySlotArray[1].boxElement.addEventListener('click', handleClickSlotTwo);
+displaySlotArray[2].boxElement.addEventListener('click', handleClickSlotThree);
+
+function handleClickAll(clickSlot) {
+    totalClicks += 1;
+    prodArray[prodShown[clickSlot]].timesChosen += 1;
+    for(var i = 0; i < 3; i += 1) {
+      prodArray[prodShown[i]].timesShown += 1;
+    }
+    showNewProductGroup();
+    checkButtonCount();
+}
+
+var buttonElement = document.getElementById('show-button');
+var showButtonNumber = 3;
+
+function checkButtonCount() {
+  console.log('totalClicks is ' + totalClicks);
+  if(totalClicks === showButtonNumber) {
+    buttonElement.style.visibility = 'visible';
+  }
+}
+
+function handleClickSlotOne(e) {
+  handleClickAll(0);
+}
+
+function handleClickSlotTwo(e) {
+  handleClickAll(1);
+}
+
+function handleClickSlotThree(e) {
+  handleClickAll(2);
+}
+
+var showButtonElement = document.getElementById('show-button');
+var resultsElement = document.getElementById('results');
+
+showButtonElement.addEventListener('click', handleButtonClick);
+
+function handleButtonClick(e) {
+  showButtonElement.textContent = 'Update Results';
+  var nameArray = [];
+  var chosenArray = [];
+  var shownArray = [];
+  var percentArray = [];
+  for(var i = 0; i < prodArray.length; i += 1) {
+    var shortName = prodArray[i].imageFile.split('.')[0];
+    nameArray.push(shortName);
+    var chosen = prodArray[i].timesChosen;
+    chosenArray.push(chosen);
+    var shown = prodArray[i].timesShown;
+    shownArray.push(shown);
+    var percentage = 0;
+    if (shown) {
+      percentage = Math.round((chosen / shown) * 100) + "%";
+    }
+    percentArray.push(percentage);
+  }
+  produceBarGraph(nameArray, chosenArray, shownArray);
+}
+
+function produceBarGraph(nameArray, chosenArray, shownArray) {
+  var graphData = {
+    labels: nameArray,
+    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+    datasets: [
+      {
+        label: 'Times Item Chosen',
+        fillColor: '#48A497',
+        strokeColor: '#48A4D1',
+        data: chosenArray
+      },
+      {
+        label: 'Times Item Shown',
+        fillColor: 'rgba(73,188,170,0.4)',
+        strokeColor: 'rgba(72,174,209,0.4)',
+        data: shownArray
+      }
+    ]
+  }
+
+  var graphElement = document.getElementById('bar-graph').getContext('2d');
+  var legendElement = document.getElementById('legend');
+  var barChart = new Chart(graphElement).Bar(graphData);
+  legendElement.innerHTML = barChart.generateLegend();
+}
+
+showNewProductGroup();
