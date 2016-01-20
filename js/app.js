@@ -24,21 +24,15 @@ prodArray.push(new Product('USB tentacle', 'usb.gif'));
 prodArray.push(new Product('Self-watering can', 'water-can.jpg'));
 prodArray.push(new Product('Sideways wine glass', 'wine-glass.jpg'));
 
-// var boxElementArray = [];
-// boxElementArray.push(document.getElementById('box1'));
-// boxElementArray.push(document.getElementById('box2'));
-// boxElementArray.push(document.getElementById('box3'));
+// var slotInit;
+var nameArray = [];
 
-// var imageElementArray = [];
-// imageElementArray.push(document.getElementById('image1'));
-// imageElementArray.push(document.getElementById('image2'));
-// imageElementArray.push(document.getElementById('image3'));
-//
-// var titleElementArray = [];
-// titleElementArray.push(document.getElementById('title1'));
-// titleElementArray.push(document.getElementById('title2'));
-// titleElementArray.push(document.getElementById('title3'));
-var slotInit;
+function initNameArray() {
+  for(var i = 0; i < prodArray.length; i += 1) {
+    var shortName = prodArray[i].imageFile.split('.')[0];
+    nameArray.push(shortName);
+  }
+}
 
 var totalClicks = 0;
 
@@ -50,40 +44,13 @@ function DisplaySlot(slotInitNum) {
   this.boxElement = document.getElementById(boxId);
   this.imageElement = document.getElementById(imageId);
   this.titleElement = document.getElementById(titleId);
-  // this.handleClick = function() {
-  //   totalClicks += 1;
-  //   for(var i = 0; i < 3; i += 1) {
-  //     prodArray[prodShown[i]].timesShown += 1;
-  //   }
-  //   console.log(this.displaySlotNum);
-  //   // prodArray[prodShown[this.displaySlotNum]].timesChosen += 1;
-  //   // prodArray[this.displaySlotNum].timesChosen += 1;
-  //   showNewProductGroup();
-  // }
-  // this.createBoxEventListener = function() {
-  //   this.boxElement.addEventListener('click', function(), slotInit);
-  // }
-  // this.createBoxEventListener();
 }
-
-// DisplaySlot.prototype.handleClick = function(event) {
-//   console.log(event);
-//   totalClicks += 1;
-//   for(var i = 0; i < 3; i += 1) {
-//     prodArray[prodShown[i]].timesShown += 1;
-//   }
-//   prodArray[this.displaySlotNum] += 1;
-//   showNewProductGroup();
-// }
-
 
 var displaySlotArray = [];
 
 for(var i = 0; i < 3; i += 1) {
-  // slotInit = i;
   displaySlotArray[i] = new DisplaySlot(i);
 }
-
 
 function showProduct(prodNum, slotNum) {
   var slotImageElement = displaySlotArray[slotNum].imageElement;
@@ -91,10 +58,6 @@ function showProduct(prodNum, slotNum) {
   slotImageElement.setAttribute('src', 'img\/' + prodArray[prodNum].imageFile);
   slotTitleElement.textContent = prodArray[prodNum].productName;
 }
-
-// function randomProductNumber() {
-//   return Math.floor(Math.random() * prodArray.length);
-// }
 
 function randomProductNumber() {
   while (true) {
@@ -143,6 +106,8 @@ displaySlotArray[0].boxElement.addEventListener('click', handleClickSlotOne);
 displaySlotArray[1].boxElement.addEventListener('click', handleClickSlotTwo);
 displaySlotArray[2].boxElement.addEventListener('click', handleClickSlotThree);
 
+var showButtonNumber = 3;
+
 function handleClickAll(clickSlot) {
     totalClicks += 1;
     prodArray[prodShown[clickSlot]].timesChosen += 1;
@@ -150,18 +115,16 @@ function handleClickAll(clickSlot) {
       prodArray[prodShown[i]].timesShown += 1;
     }
     showNewProductGroup();
-    checkButtonCount();
+    if(totalClicks === showButtonNumber) {
+      buttonElement.style.visibility = 'visible';
+    }
 }
 
 var buttonElement = document.getElementById('show-button');
-var showButtonNumber = 3;
 
-function checkButtonCount() {
-  console.log('totalClicks is ' + totalClicks);
-  if(totalClicks === showButtonNumber) {
-    buttonElement.style.visibility = 'visible';
-  }
-}
+// function handleClickBySlot(slotNo) {
+//   return function(e) {}
+// }
 
 function handleClickSlotOne(e) {
   handleClickAll(0);
@@ -180,15 +143,13 @@ var resultsElement = document.getElementById('results');
 
 showButtonElement.addEventListener('click', handleButtonClick);
 
+
 function handleButtonClick(e) {
   showButtonElement.textContent = 'Update Results';
-  var nameArray = [];
   var chosenArray = [];
   var shownArray = [];
   var percentArray = [];
   for(var i = 0; i < prodArray.length; i += 1) {
-    var shortName = prodArray[i].imageFile.split('.')[0];
-    nameArray.push(shortName);
     var chosen = prodArray[i].timesChosen;
     chosenArray.push(chosen);
     var shown = prodArray[i].timesShown;
@@ -228,4 +189,5 @@ function produceBarGraph(nameArray, chosenArray, shownArray) {
   legendElement.innerHTML = barChart.generateLegend();
 }
 
+initNameArray();
 showNewProductGroup();
