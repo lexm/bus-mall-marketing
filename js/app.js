@@ -25,6 +25,14 @@ prodArray.push(new Product('Self-watering can', 'water-can.jpg'));
 prodArray.push(new Product('Sideways wine glass', 'wine-glass.jpg'));
 
 // var slotInit;
+var nameArray = [];
+
+function initNameArray() {
+  for(var i = 0; i < prodArray.length; i += 1) {
+    var shortName = prodArray[i].imageFile.split('.')[0];
+    nameArray.push(shortName);
+  }
+}
 
 var totalClicks = 0;
 
@@ -98,6 +106,8 @@ displaySlotArray[0].boxElement.addEventListener('click', handleClickSlotOne);
 displaySlotArray[1].boxElement.addEventListener('click', handleClickSlotTwo);
 displaySlotArray[2].boxElement.addEventListener('click', handleClickSlotThree);
 
+var showButtonNumber = 3;
+
 function handleClickAll(clickSlot) {
     totalClicks += 1;
     prodArray[prodShown[clickSlot]].timesChosen += 1;
@@ -105,18 +115,16 @@ function handleClickAll(clickSlot) {
       prodArray[prodShown[i]].timesShown += 1;
     }
     showNewProductGroup();
-    checkButtonCount();
+    if(totalClicks === showButtonNumber) {
+      buttonElement.style.visibility = 'visible';
+    }
 }
 
 var buttonElement = document.getElementById('show-button');
-var showButtonNumber = 3;
 
-function checkButtonCount() {
-  console.log('totalClicks is ' + totalClicks);
-  if(totalClicks === showButtonNumber) {
-    buttonElement.style.visibility = 'visible';
-  }
-}
+// function handleClickBySlot(slotNo) {
+//   return function(e) {}
+// }
 
 function handleClickSlotOne(e) {
   handleClickAll(0);
@@ -135,15 +143,13 @@ var resultsElement = document.getElementById('results');
 
 showButtonElement.addEventListener('click', handleButtonClick);
 
+
 function handleButtonClick(e) {
   showButtonElement.textContent = 'Update Results';
-  var nameArray = [];
   var chosenArray = [];
   var shownArray = [];
   var percentArray = [];
   for(var i = 0; i < prodArray.length; i += 1) {
-    var shortName = prodArray[i].imageFile.split('.')[0];
-    nameArray.push(shortName);
     var chosen = prodArray[i].timesChosen;
     chosenArray.push(chosen);
     var shown = prodArray[i].timesShown;
@@ -183,4 +189,5 @@ function produceBarGraph(nameArray, chosenArray, shownArray) {
   legendElement.innerHTML = barChart.generateLegend();
 }
 
+initNameArray();
 showNewProductGroup();
