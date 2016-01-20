@@ -1,5 +1,19 @@
 'use strict';
 
+var showButtonNumber = 3; // Number of choices before user sees "Show Results" button
+var fullNameArray = [['R2D2 suitcase', 'bag.jpg'], ['Banana slicer', 'banana.jpg'], ['Open-toed galoshes', 'boots.jpg'],
+['Not-so-comfy chair', 'chair.jpg'], ['Raging Cthulhu', 'cthulhu.jpg'], ['Dragon meat', 'dragon.jpg'],
+['Pen utensils', 'pen.jpg'], ['Pizza scissors', 'scissors.jpg'], ['Shark sleeping bag', 'shark.jpg'],
+['Infant sweeper', 'sweep.png'], ['Unicorn meat', 'unicorn.jpg'], ['USB tentacle', 'usb.gif'],
+['Self-watering can', 'water-can.jpg'], ['Sideways wine glass', 'wine-glass.jpg']];
+var prodArray = [];
+var nameArray = [];
+var displaySlotArray = [];
+var prodShown = [];
+var totalClicks = 0;
+var buttonElement = document.getElementById('show-button');
+var resultsElement = document.getElementById('results');
+
 function Product(productName, imageFile) {
   this.productName = productName;
   this.imageFile = imageFile;
@@ -7,49 +21,37 @@ function Product(productName, imageFile) {
   this.timesShown = 0;
 }
 
-var prodArray = [];
-
-prodArray.push(new Product('R2D2 suitcase', 'bag.jpg'));
-prodArray.push(new Product('Banana slicer', 'banana.jpg'));
-prodArray.push(new Product('Open-toed galoshes', 'boots.jpg'));
-prodArray.push(new Product('Not-so-comfy chair', 'chair.jpg'));
-prodArray.push(new Product('Raging Cthulhu', 'cthulhu.jpg'));
-prodArray.push(new Product('Dragon meat', 'dragon.jpg'));
-prodArray.push(new Product('Pen utensils', 'pen.jpg'));
-prodArray.push(new Product('Pizza scissors', 'scissors.jpg'));
-prodArray.push(new Product('Shark sleeping bag', 'shark.jpg'));
-prodArray.push(new Product('Infant sweeper', 'sweep.png'));
-prodArray.push(new Product('Unicorn meat', 'unicorn.jpg'));
-prodArray.push(new Product('USB tentacle', 'usb.gif'));
-prodArray.push(new Product('Self-watering can', 'water-can.jpg'));
-prodArray.push(new Product('Sideways wine glass', 'wine-glass.jpg'));
-
-// var slotInit;
-var nameArray = [];
-
-function initNameArray() {
-  for(var i = 0; i < prodArray.length; i += 1) {
-    var shortName = prodArray[i].imageFile.split('.')[0];
-    nameArray.push(shortName);
-  }
-}
-
-var totalClicks = 0;
-
 function DisplaySlot(slotInitNum) {
   var boxId = 'box' + (slotInitNum + 1);
   var imageId = 'image' + (slotInitNum + 1);
   var titleId = 'title' + (slotInitNum + 1);
-  // this.displaySlotNum = slotInitNum;
   this.boxElement = document.getElementById(boxId);
   this.imageElement = document.getElementById(imageId);
   this.titleElement = document.getElementById(titleId);
+  this.addClickHandler = function () {
+    this.boxElement.addEventListener('click', function (e) {
+      totalClicks += 1;
+      prodArray[prodShown[slotInitNum]].timesChosen += 1;
+      for(var i = 0; i < 3; i += 1) {
+        prodArray[prodShown[i]].timesShown += 1;
+      }
+      showNewProductGroup();
+      if(totalClicks === showButtonNumber) {
+        buttonElement.style.visibility = 'visible';
+      }
+    });
+  };
+  this.addClickHandler();
 }
 
-var displaySlotArray = [];
-
-for(var i = 0; i < 3; i += 1) {
-  displaySlotArray[i] = new DisplaySlot(i);
+function initArrays() {
+  for(var i = 0; i < fullNameArray.length; i += 1) {
+    prodArray.push(new Product(fullNameArray[i][0], fullNameArray[i][1]));
+    nameArray.push(fullNameArray[i][1].split('.')[0]);
+  }
+  for(var i = 0; i < 3; i += 1) {
+    displaySlotArray[i] = new DisplaySlot(i);
+  }
 }
 
 function showProduct(prodNum, slotNum) {
@@ -70,21 +72,19 @@ function randomProductNumber() {
   }
 }
 
-var prodShown = [];
-
-function checkIfNoRepeat(newProdArray) {
-  var arrLength = newProdArray.length - 1;
-  var newPNum = newProdArray[arrLength];
+function checkIfNoRepeat(newProdArray) {   // Checks if last (newest) item in
+  var arrLength = newProdArray.length - 1; // array is a repeat of an earlier
+  var newPNum = newProdArray[arrLength];   // item. Returns 'true' if it's not.
   for(var i = 0; i < arrLength; i += 1) {
-    if(newProdArray[i] === newPNum)
-    return false;
+    if(newProdArray[i] === newPNum) {
+      return false;
+    }
   }
   return true;
 }
 
 function genProdShownArray() {
   var newArray = [];
-  // var match;
   for(var i = 0; i < 3; ) {
     newArray[i] = randomProductNumber();
     if(checkIfNoRepeat(newArray)) {
@@ -97,68 +97,22 @@ function genProdShownArray() {
 function showNewProductGroup() {
   prodShown = genProdShownArray();
   for(var i = 0; i < 3; i += 1) {
-    // console.log(prodShown[i]);
     showProduct(prodShown[i], i);
   }
 }
 
-displaySlotArray[0].boxElement.addEventListener('click', handleClickSlotOne);
-displaySlotArray[1].boxElement.addEventListener('click', handleClickSlotTwo);
-displaySlotArray[2].boxElement.addEventListener('click', handleClickSlotThree);
 
-var showButtonNumber = 3;
-
-function handleClickAll(clickSlot) {
-    totalClicks += 1;
-    prodArray[prodShown[clickSlot]].timesChosen += 1;
-    for(var i = 0; i < 3; i += 1) {
-      prodArray[prodShown[i]].timesShown += 1;
-    }
-    showNewProductGroup();
-    if(totalClicks === showButtonNumber) {
-      buttonElement.style.visibility = 'visible';
-    }
-}
-
-var buttonElement = document.getElementById('show-button');
-
-// function handleClickBySlot(slotNo) {
-//   return function(e) {}
-// }
-
-function handleClickSlotOne(e) {
-  handleClickAll(0);
-}
-
-function handleClickSlotTwo(e) {
-  handleClickAll(1);
-}
-
-function handleClickSlotThree(e) {
-  handleClickAll(2);
-}
-
-var showButtonElement = document.getElementById('show-button');
-var resultsElement = document.getElementById('results');
-
-showButtonElement.addEventListener('click', handleButtonClick);
-
+buttonElement.addEventListener('click', handleButtonClick);
 
 function handleButtonClick(e) {
-  showButtonElement.textContent = 'Update Results';
+  buttonElement.textContent = 'Update Results';
   var chosenArray = [];
   var shownArray = [];
-  var percentArray = [];
   for(var i = 0; i < prodArray.length; i += 1) {
     var chosen = prodArray[i].timesChosen;
     chosenArray.push(chosen);
     var shown = prodArray[i].timesShown;
     shownArray.push(shown);
-    var percentage = 0;
-    if (shown) {
-      percentage = Math.round((chosen / shown) * 100) + "%";
-    }
-    percentArray.push(percentage);
   }
   produceBarGraph(nameArray, chosenArray, shownArray);
 }
@@ -166,7 +120,7 @@ function handleButtonClick(e) {
 function produceBarGraph(nameArray, chosenArray, shownArray) {
   var graphData = {
     labels: nameArray,
-    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+    legendTemplate : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<datasets.length; i++){%><li><span style=\'background-color:<%=datasets[i].fillColor%>\'></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
     datasets: [
       {
         label: 'Times Item Chosen',
@@ -181,13 +135,12 @@ function produceBarGraph(nameArray, chosenArray, shownArray) {
         data: shownArray
       }
     ]
-  }
-
+  };
   var graphElement = document.getElementById('bar-graph').getContext('2d');
   var legendElement = document.getElementById('legend');
   var barChart = new Chart(graphElement).Bar(graphData);
   legendElement.innerHTML = barChart.generateLegend();
 }
 
-initNameArray();
+initArrays();
 showNewProductGroup();
