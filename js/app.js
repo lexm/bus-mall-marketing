@@ -112,6 +112,17 @@ function handleButtonClick(e) {
   produceBarGraph(nameArray, chosenArray, shownArray);
 }
 
+var clearLSElement = document.getElementById('lsClear');
+
+var handleLSClear = function() {
+  console.log('clearing Local Storage');
+  localStorage.clear();
+};
+
+clearLSElement.addEventListener('click', handleLSClear);
+
+
+
 function produceBarGraph(nameArray, chosenArray, shownArray) {
   var graphData = {
     labels: nameArray,
