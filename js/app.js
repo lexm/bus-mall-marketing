@@ -15,6 +15,7 @@ var buttonElement = document.getElementById('show-button');
 var resultsElement = document.getElementById('results');
 var graphElement = document.getElementById('bar-graph').getContext('2d');
 var legendElement = document.getElementById('legend');
+var productSetElement = document.getElementById('product-set');
 
 function Product(productName, imageFile) {
   this.productName = productName;
@@ -27,10 +28,17 @@ function DisplaySlot(slotInitNum) {
   var boxId = 'box' + (slotInitNum + 1);
   var imageId = 'image' + (slotInitNum + 1);
   var titleId = 'title' + (slotInitNum + 1);
+  // this.createSlot = function() {
+  //   var markup = '<div class="product-box" id="' + boxId;
+  //   markup += '"><img src="" id="' + imageId + '" class="product-image">';
+  //   markup += '<p id="' + titleId + '"></p>';
+  //   productSetElement.innerHTML += markup;
+  // };
+  // this.createSlot();
   this.boxElement = document.getElementById(boxId);
   this.imageElement = document.getElementById(imageId);
   this.titleElement = document.getElementById(titleId);
-  this.addClickHandler = function () {
+  this.addClickHandler = function() {
     this.boxElement.addEventListener('click', function (e) {
       totalClicks += 1;
       prodArray[prodShown[slotInitNum]].timesChosen += 1;
@@ -61,6 +69,8 @@ function showProduct(prodNum, slotNum) {
   var slotTitleElement = displaySlotArray[slotNum].titleElement;
   slotImageElement.setAttribute('src', 'img\/' + prodArray[prodNum].imageFile);
   slotTitleElement.textContent = prodArray[prodNum].productName;
+  // console.log(slotImageElement.getAttribute('src') + ' ' + prodArray[prodNum].imageFile);
+  // alert('Hey');
 }
 
 function randomProductNumber() {
@@ -88,9 +98,10 @@ function checkIfNoRepeat(newProdArray) {   // Checks if last (newest) item in
 function showNewProductGroup() {
   var newArray = [];
   for(var i = 0; i < 3; ) {
+    // newArray.push(randomProductNumber());
     newArray[i] = randomProductNumber();
     if(checkIfNoRepeat(newArray)) {
-      showProduct([newArray[i]], i);
+      showProduct(newArray[i], i);
       i += 1;
     }
   }

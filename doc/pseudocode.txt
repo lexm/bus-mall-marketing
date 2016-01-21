@@ -8,6 +8,8 @@ write Product constructor
     timesShown : integer
 create array of Product
 
+
+
 generate prodShown array
   for(i = 0; i < 3; )
     pick random product number
@@ -52,10 +54,30 @@ generate table/chart showing results of survey
 
 
 
+displaySlotArray[0].boxElement.addEventListener('click', handleClickSlotOne);
+
+function handleClickSlotOne(e) {
+  handleClickAll(0);
+}
+
+function handleClickAll(clickSlot) {
+  totalClicks += 1;
+  prodArray[prodShown[clickSlot]].timesChosen += 1;
+  for(var i = 0; i < 3; i += 1) {
+    prodArray[prodShown[i]].timesShown += 1;
+  }
+  showNewProductGroup();
+  if(totalClicks === showButtonNumber) {
+    buttonElement.style.visibility = 'visible';
+  }
+}
 
 
-
-
+function addClickHandler(slotNum) {
+  displaySlotArray[slotNum].boxElement.addEventListener('click', function (e) {
+    handleClickAll(slotNum);
+  })
+}
 
 
   /* begin abandoned pcode
