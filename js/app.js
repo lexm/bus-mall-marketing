@@ -37,6 +37,7 @@ function DisplaySlot(slotInitNum) {
       for(var i = 0; i < 3; i += 1) {
         prodArray[prodShown[i]].timesShown += 1;
       }
+      localStorage.setItem('dataPersist', JSON.stringify(prodArray));
       showNewProductGroup();
       if(totalClicks === showButtonNumber) {
         buttonElement.style.visibility = 'visible';
@@ -145,6 +146,15 @@ function produceBarGraph(nameArray, chosenArray, shownArray) {
   var barChart = new Chart(graphElement).Bar(graphData);
   legendElement.innerHTML = barChart.generateLegend();
 }
+
+var prodData = localStorage.getItem('dataPersist');
+if (prodData) {
+  prodArray = JSON.parse(prodData);
+} else {
+  console.log('Local storage empty! Initializing!');
+  localStorage.setItem('dataPersist', JSON.stringify(prodArray));
+}
+
 
 initArrays();
 showNewProductGroup();

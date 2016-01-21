@@ -13,3 +13,8 @@ selection.
 2015-01-19: Now counts number of clicks and times shown per item, and
 calculates percentages between the two. Generates array for Charts.js to use.
 Added button with click handler to call the code to generate the bar graph.
+
+1/21 Partner Programming
+Iris Carrera https://github.com/icarrera
+Updated app.js to include Local Storage
+Updated index.html to include clear Local Storage button
