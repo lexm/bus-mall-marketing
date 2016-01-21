@@ -24,6 +24,23 @@ function Product(productName, imageFile) {
   this.timesShown = 0;
 }
 
+
+function initSlotHTML() {
+  createSlotHTML(0);
+  createSlotHTML(1);
+  createSlotHTML(2);
+}
+
+function createSlotHTML(slotNu) {
+  var boxId = 'box' + (slotNu + 1);
+  var imageId = 'image' + (slotNu + 1);
+  var titleId = 'title' + (slotNu + 1);
+  var markup = '<div class="product-box" id="' + boxId;
+  markup += '"><img src="" id="' + imageId + '" class="product-image">';
+  markup += '<p id="' + titleId + '"></p>';
+  productSetElement.innerHTML += markup;
+}
+
 function DisplaySlot(slotInitNum) {
   var boxId = 'box' + (slotInitNum + 1);
   var imageId = 'image' + (slotInitNum + 1);
@@ -147,4 +164,5 @@ function produceBarGraph(nameArray, chosenArray, shownArray) {
 }
 
 initArrays();
+initSlotHTML();
 showNewProductGroup();
