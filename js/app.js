@@ -160,6 +160,15 @@ if(prodData) {
   var oldProdData = false;
 }
 
+var totalClicksFromLS = localStorage.getItem('totalClicksPersist');
+if(totalClicksFromLS) {
+  totalClicks = parseInt(totalClicksFromLS);
+  if(totalClicks >= 3) {
+    buttonElement.style.visibility = 'visible';
+  }
+}
+
+
 var totalClicksLS = localStorage.getItem('totalClicksPersist');
 if(totalClicksLS) {
   totalClicks = parseInt(totalClicksLS);
