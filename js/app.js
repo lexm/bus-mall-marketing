@@ -37,6 +37,7 @@ function DisplaySlot(slotInitNum) {
       for(var i = 0; i < 3; i += 1) {
         prodArray[prodShown[i]].timesShown += 1;
       }
+      localStorage.setItem('dataPersist', JSON.stringify(prodArray));
       showNewProductGroup();
       if(totalClicks === showButtonNumber) {
         buttonElement.style.visibility = 'visible';
@@ -112,6 +113,17 @@ function handleButtonClick(e) {
   produceBarGraph(nameArray, chosenArray, shownArray);
 }
 
+var clearLSElement = document.getElementById('lsClear');
+
+var handleLSClear = function() {
+  console.log('clearing Local Storage');
+  localStorage.clear();
+};
+
+clearLSElement.addEventListener('click', handleLSClear);
+
+
+
 function produceBarGraph(nameArray, chosenArray, shownArray) {
   var graphData = {
     labels: nameArray,
@@ -134,6 +146,15 @@ function produceBarGraph(nameArray, chosenArray, shownArray) {
   var barChart = new Chart(graphElement).Bar(graphData);
   legendElement.innerHTML = barChart.generateLegend();
 }
+
+var prodData = localStorage.getItem('dataPersist');
+if (prodData) {
+  prodArray = JSON.parse(prodData);
+} else {
+  console.log('Local storage empty! Initializing!');
+  localStorage.setItem('dataPersist', JSON.stringify(prodArray));
+}
+
 
 initArrays();
 showNewProductGroup();
