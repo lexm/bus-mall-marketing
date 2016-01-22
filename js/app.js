@@ -47,9 +47,11 @@ function DisplaySlot(slotInitNum) {
   this.addClickHandler();
 }
 
-function initArrays() {
+function initArrays(lsExists) {
   for(var i = 0; i < fullNameArray.length; i += 1) {
-    prodArray.push(new Product(fullNameArray[i][0], fullNameArray[i][1]));
+    if(!lsExists) {
+      prodArray.push(new Product(fullNameArray[i][0], fullNameArray[i][1]));
+    }
     nameArray.push(fullNameArray[i][1].split('.')[0]);
   }
   for(var i = 0; i < 3; i += 1) {
@@ -150,11 +152,13 @@ function produceBarGraph(nameArray, chosenArray, shownArray) {
 var prodData = localStorage.getItem('dataPersist');
 if (prodData) {
   prodArray = JSON.parse(prodData);
+  var oldProdData = true;
 } else {
   console.log('Local storage empty! Initializing!');
   localStorage.setItem('dataPersist', JSON.stringify(prodArray));
+  var oldProdData = false;
 }
 
+initArrays(oldProdData);
 
-initArrays();
 showNewProductGroup();
