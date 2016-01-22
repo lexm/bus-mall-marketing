@@ -33,13 +33,14 @@ function DisplaySlot(slotInitNum) {
   this.addClickHandler = function () {
     this.boxElement.addEventListener('click', function (e) {
       totalClicks += 1;
+      localStorage.setItem('totalClicksPersist', totalClicks);
       prodArray[prodShown[slotInitNum]].timesChosen += 1;
       for(var i = 0; i < 3; i += 1) {
         prodArray[prodShown[i]].timesShown += 1;
       }
       localStorage.setItem('dataPersist', JSON.stringify(prodArray));
       showNewProductGroup();
-      if(totalClicks === showButtonNumber) {
+      if(totalClicks >= showButtonNumber) {
         buttonElement.style.visibility = 'visible';
       }
     });
@@ -150,13 +151,29 @@ function produceBarGraph(nameArray, chosenArray, shownArray) {
 }
 
 var prodData = localStorage.getItem('dataPersist');
-if (prodData) {
+if(prodData) {
   prodArray = JSON.parse(prodData);
   var oldProdData = true;
 } else {
   console.log('Local storage empty! Initializing!');
   localStorage.setItem('dataPersist', JSON.stringify(prodArray));
   var oldProdData = false;
+}
+
+var totalClicksFromLS = localStorage.getItem('totalClicksPersist');
+if(totalClicksFromLS) {
+  totalClicks = parseInt(totalClicksFromLS);
+  if(totalClicks >= 3) {
+    buttonElement.style.visibility = 'visible';
+  }
+}
+
+
+var totalClicksLS = localStorage.getItem('totalClicksPersist');
+if(totalClicksLS) {
+  totalClicks = parseInt(totalClicksLS);
+} else {
+  localStorage.setItem('totalClicksPersist', totalClicks);
 }
 
 initArrays(oldProdData);
