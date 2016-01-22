@@ -46,3 +46,5 @@ survey as soon as I'm allowed to do so.
 under each photo, in case I'm not sure what the item is.
 * As a focus group member, I want to be able to exit the survey without
 bothering to look at my results.
+* As a focus group member, I want to be able to quit the survey and come back
+later without losing the choices I've already made.
