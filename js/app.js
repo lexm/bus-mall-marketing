@@ -1,6 +1,6 @@
 'use strict';
 
-var showButtonNumber = 3; // Number of choices before user sees "Show Results" button
+var showButtonNumber = 15; // Number of choices before user sees "Show Results" button
 var fullNameArray = [['R2D2 suitcase', 'bag.jpg'], ['Banana slicer', 'banana.jpg'], ['Open-toed galoshes', 'boots.jpg'],
 ['Not-so-comfy chair', 'chair.jpg'], ['Raging Cthulhu', 'cthulhu.jpg'], ['Dragon meat', 'dragon.jpg'],
 ['Pen utensils', 'pen.jpg'], ['Pizza scissors', 'scissors.jpg'], ['Shark sleeping bag', 'shark.jpg'],
@@ -12,10 +12,11 @@ var displaySlotArray = [];
 var prodShown = [];
 var oldProdShown = [];
 var totalClicks = 0;
-var buttonElement = document.getElementById('show-button');
+var showButtonElement = document.getElementById('show-button');
 var resultsElement = document.getElementById('results');
 var graphElement = document.getElementById('bar-graph').getContext('2d');
 var legendElement = document.getElementById('legend');
+var clearButtonElement = document.getElementById('lsClear');
 
 function Product(productName, imageFile) {
   this.productName = productName;
@@ -42,7 +43,7 @@ function DisplaySlot(slotInitNum) {
       localStorage.setItem('dataPersist', JSON.stringify(prodArray));
       showNewProductGroup();
       if(totalClicks >= showButtonNumber) {
-        buttonElement.style.visibility = 'visible';
+        showButtonElement.style.visibility = 'visible';
       }
     });
   };
@@ -116,10 +117,10 @@ function genNewProductGroup() {
   return newArray;
 }
 
-buttonElement.addEventListener('click', handleButtonClick);
+showButtonElement.addEventListener('click', handleButtonClick);
 
 function handleButtonClick(e) {
-  buttonElement.textContent = 'Update Results';
+  showButtonElement.textContent = 'Update Results';
   var chosenArray = [];
   var shownArray = [];
   for(var i = 0; i < prodArray.length; i += 1) {
@@ -139,6 +140,10 @@ var handleLSClear = function() {
 };
 
 clearLSElement.addEventListener('click', handleLSClear);
+
+function clearButtonVisible() {
+  clearButtonElement.style.visibility = 'visible';
+}
 
 function produceBarGraph(nameArray, chosenArray, shownArray) {
   var graphData = {
@@ -173,20 +178,25 @@ if(prodData) {
   var oldProdData = false;
 }
 
-var totalClicksFromLS = localStorage.getItem('totalClicksPersist');
-if(totalClicksFromLS) {
-  totalClicks = parseInt(totalClicksFromLS);
-  if(totalClicks >= 3) {
-    buttonElement.style.visibility = 'visible';
-  }
-}
+// var totalClicksFromLS = localStorage.getItem('totalClicksPersist');
+// if(totalClicksFromLS) {
+//   totalClicks = parseInt(totalClicksFromLS);
+//   if(totalClicks >= 3) {
+//     showButtonElement.style.visibility = 'visible';
+//   }
+// }
 
 var totalClicksLS = localStorage.getItem('totalClicksPersist');
 if(totalClicksLS) {
   totalClicks = parseInt(totalClicksLS);
+  if(totalClicks >= 3) {
+    showButtonElement.style.visibility = 'visible';
+  }
 } else {
   localStorage.setItem('totalClicksPersist', totalClicks);
 }
+
+
 
 initArrays(oldProdData);
 
