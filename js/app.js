@@ -93,14 +93,6 @@ function checkIfNoRepeat(newProdArray) {   // Checks if last (newest) item in
 
 function showNewProductGroup() {
   var newProdShown = genNewProductGroup();
-  // for(i = 0; i < oldProdShown.length; i += 1) {
-  //   if(oldProdShown[i] === newProdShown.sort()) {
-  //
-  //   }
-  // }
-  // prodShown = newArray;
-  //
-  // if(oldProdShown[])
   prodShown = newProdShown;
 }
 
@@ -178,14 +170,6 @@ if(prodData) {
   var oldProdData = false;
 }
 
-// var totalClicksFromLS = localStorage.getItem('totalClicksPersist');
-// if(totalClicksFromLS) {
-//   totalClicks = parseInt(totalClicksFromLS);
-//   if(totalClicks >= 3) {
-//     showButtonElement.style.visibility = 'visible';
-//   }
-// }
-
 var totalClicksLS = localStorage.getItem('totalClicksPersist');
 if(totalClicksLS) {
   totalClicks = parseInt(totalClicksLS);
@@ -195,8 +179,6 @@ if(totalClicksLS) {
 } else {
   localStorage.setItem('totalClicksPersist', totalClicks);
 }
-
-
 
 initArrays(oldProdData);
 
