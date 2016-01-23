@@ -29,6 +29,10 @@ h1, h4 {
   visibility: hidden;
 }
 
+#lsClear {
+  visibility:hidden;
+}
+
 #results {
   display: flex;
   justify-content: center;
