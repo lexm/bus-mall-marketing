@@ -10,6 +10,7 @@ var prodArray = [];
 var nameArray = [];
 var displaySlotArray = [];
 var prodShown = [];
+var oldProdShown = [];
 var totalClicks = 0;
 var buttonElement = document.getElementById('show-button');
 var resultsElement = document.getElementById('results');
@@ -90,6 +91,20 @@ function checkIfNoRepeat(newProdArray) {   // Checks if last (newest) item in
 }
 
 function showNewProductGroup() {
+  var newProdShown = genNewProductGroup();
+  // for(i = 0; i < oldProdShown.length; i += 1) {
+  //   if(oldProdShown[i] === newProdShown.sort()) {
+  //
+  //   }
+  // }
+  // prodShown = newArray;
+  //
+  // if(oldProdShown[])
+  prodShown = newProdShown;
+}
+
+
+function genNewProductGroup() {
   var newArray = [];
   for(var i = 0; i < 3; ) {
     newArray[i] = randomProductNumber();
@@ -98,7 +113,7 @@ function showNewProductGroup() {
       i += 1;
     }
   }
-  prodShown = newArray;
+  return newArray;
 }
 
 buttonElement.addEventListener('click', handleButtonClick);
@@ -124,8 +139,6 @@ var handleLSClear = function() {
 };
 
 clearLSElement.addEventListener('click', handleLSClear);
-
-
 
 function produceBarGraph(nameArray, chosenArray, shownArray) {
   var graphData = {
@@ -167,7 +180,6 @@ if(totalClicksFromLS) {
     buttonElement.style.visibility = 'visible';
   }
 }
-
 
 var totalClicksLS = localStorage.getItem('totalClicksPersist');
 if(totalClicksLS) {
